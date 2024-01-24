@@ -2,7 +2,7 @@
 export default function Header({user, setUser}) {
 
     function handleSignIn() {
-        
+        // redirect to sign in page
     }
 
     return (
