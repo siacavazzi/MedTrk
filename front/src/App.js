@@ -1,14 +1,18 @@
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import { useState, useEffect } from 'react';
+import { UserProvider } from './components/UserContext';
+
 
 function App() {
 
 
   return (
     <div >
-      <Header/>
-      <Outlet/>
+      <UserProvider>
+        <Header />
+        <Outlet />
+      </UserProvider>
     </div>
   );
 }
