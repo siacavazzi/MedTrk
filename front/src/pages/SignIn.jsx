@@ -12,9 +12,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useUser } from '../components/UserContext';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from '../constants';
+import Alert from '@mui/material/Alert';
 
 
 function Copyright(props) {
+
+
+
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
@@ -32,13 +40,48 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const { updateUser } = useUser();
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
+  function userCallback(data) {
+    console.log("test")
+    if (data.id) {
+      updateUser(data)
+      navigate('/')
+    } else {
+      setError(data)
+    }
+  }
+
+  async function handleSubmit(event) {
+
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const userData = {
+      "email": email,
+      "password": pw
+    }
+    const OPTIONS = {
+      method: "POST",
+      credentials: 'include',
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    }
+    console.log(userData)
+    try {
+      const resp = await fetch(`${BASE_URL}/login`, OPTIONS);
+      const data = await resp.json();
+      console.log(data)
+      userCallback(data)
+    } catch {
+      setError("Failed to reach server: check your connection")
+    }
+
+
   };
 
   return (
@@ -53,6 +96,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
+          {error ? <Alert severity="error">{error.error}</Alert> : <div />}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -61,6 +105,8 @@ export default function SignIn() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               margin="normal"
               required
               fullWidth
@@ -71,6 +117,8 @@ export default function SignIn() {
               autoFocus
             />
             <TextField
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
               margin="normal"
               required
               fullWidth
@@ -85,6 +133,7 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
+              onClick= {(e)=> handleSubmit(e)}
               type="submit"
               fullWidth
               variant="contained"

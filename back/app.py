@@ -40,7 +40,7 @@ def login():
         if user and bcrypt.check_password_hash(user.pass_hash, json["password"]):
             session["user_id"] = user.id
             print(session.get('user_id'))
-            return user.secure_dict(), 202
+            return user.secure_dict(), 200
         else:
             return {"error":"Incorrect login information. Please try again."}
     except Exception as e:
