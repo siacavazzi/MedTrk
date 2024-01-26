@@ -7,13 +7,24 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import AccountPage from './pages/AccountPage';
+import { userLoader } from './components/loaders';
+import { UserProvider } from './components/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+function Appdataprovider() {
+  return (
+    <UserProvider>
+      <App/>
+    </UserProvider>
+  )
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Appdataprovider />,
+    loader: userLoader,
     children: [
       {
         path: "signup",

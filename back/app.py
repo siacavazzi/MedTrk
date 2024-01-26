@@ -25,6 +25,7 @@ def current_user():
 @app.get('/check_session')
 def check_session():
     user = current_user()
+    print(user)
     if user:
         return jsonify(user.secure_dict()), 200
     else:
@@ -45,14 +46,18 @@ def login():
             return {"error":"Incorrect login information. Please try again."}
     except Exception as e:
         return {"error":str(e)}
-    
-@app.get('/logout')
+
+@app.route('/logout', methods=['GET'])
 def logout():
-    try:
-        session.pop('user_id', None)
-        return {}, 202
-    except:
-        return {"error":"User could not be logged out."}, 500
+    user_id = session.pop('user_id', None)
+    if user_id is not None:
+        # User was logged in and is now logged out
+        return jsonify({"message": "User logged out successfully."}), 200
+    else:
+        # User was not logged in
+        print("User not logged in")
+        return jsonify({"error": "No user was logged in."}), 400
+
 
 
 # RESTful api for user accounts

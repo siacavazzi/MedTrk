@@ -11,18 +11,23 @@ import { red } from '@mui/material/colors';
 import { useUser } from '../components/UserContext';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
+import { BASE_URL } from '../constants';
 
 export default function AccountPage() {
     const navigate = useNavigate();
     const { user } = useUser();
 
-    useEffect(() => {
-        if (!user) {
-            navigate('/');
-        }
-    }, [user, navigate]);
+    function logout() {
+        fetch(`${BASE_URL}/logout`)
+        .then(resp => resp.json())
+        .then(data => console.log(data))
+    }
 
-
+    // useEffect(() => {
+    //     if (!user) {
+    //         navigate('/');
+    //     }
+    // }, [user, navigate]);
 
 
     const handleSubmit = (event) => {
@@ -89,6 +94,7 @@ export default function AccountPage() {
                         Update Profile
                     </Button>
                     <Button
+                        onClick ={ ()=>logout()}
                         fullWidth
                         variant="contained"
                         sx={{ mt: 1, mb: 2 }}

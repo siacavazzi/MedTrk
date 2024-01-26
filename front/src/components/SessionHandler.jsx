@@ -8,7 +8,7 @@ import Alert from '@mui/material/Alert';
 const SessionHandler = ({ children }) => {
     const { updateUser } = useUser();
     const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(true);
+
 
     const OPTIONS = {
         method: "GET",
@@ -30,8 +30,6 @@ const SessionHandler = ({ children }) => {
 
         } catch (error) {
             setError(error)
-        } finally {
-            setLoading(false)
         }}
     , []);
 

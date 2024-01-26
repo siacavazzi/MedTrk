@@ -8,8 +8,15 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const updateUser = (newUser) => {
-        console.log("Updating user...")
-        setUser(newUser);
+        
+        if (newUser) {
+            console.log("user struct...")
+            console.log(newUser.user)
+            setUser(newUser.user);
+        } else {
+            setUser(null)
+        }
+        
     };
 
     return (
