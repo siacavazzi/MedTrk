@@ -53,12 +53,11 @@ export default function Header() {
               Support
             </Link>
           </nav>
-          <Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          {user ? <Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>My Account</Button>:<Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
-          </Button>
+          </Button>}
         </Toolbar>
       </AppBar>
-
         </div>
     )
 }
