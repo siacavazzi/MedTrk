@@ -22,6 +22,7 @@ def current_user():
     user = User.query.filter(User.id == session.get('user_id')).first()
     return user
 
+# checks cookies to see if user has previously logged in
 @app.get('/check_session')
 def check_session():
     user = current_user()
