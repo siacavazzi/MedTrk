@@ -32,7 +32,6 @@ def check_session():
     else:
         return {'message':'No user found'}, 400
 
-# comment
 @app.post('/login')
 def login():
     try:
