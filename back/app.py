@@ -59,7 +59,6 @@ def logout():
         return jsonify({"error": "No user was logged in."}), 400
 
 
-
 # RESTful api for user accounts
 class Users(Resource):
     def post(self):
