@@ -7,13 +7,21 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { useUser } from '../components/UserContext';
+import { BASE_URL } from '../constants';
 
 export default function Header() {
   const { user } = useUser();
     const navigate = useNavigate();
-    function handleSignIn() {
-        // redirect to sign in page
+    function logOut() {
+      const OPTIONS = {
+        method: "POST",
+        credentials: 'include'
     }
+        fetch(`${BASE_URL}/logout`, OPTIONS)
+        .then(resp => resp.json)
+        .then(data => console.log(data))
+    }
+
 
     return (
         <div>
@@ -53,7 +61,7 @@ export default function Header() {
               Support
             </Link>
           </nav>
-          {user ? <Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>My Account</Button>:<Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          {user ? <Button onClick={() => logOut()} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>My Account</Button>:<Button onClick={() => navigate('/signin')} href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
           </Button>}
         </Toolbar>

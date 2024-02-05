@@ -10,6 +10,9 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model):
     __tablename__ = "users"
+    
+    def __repr__(self):
+        return f"User {self.fname}, {self.lname}. ID: {self.id}"
 
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String)

@@ -16,7 +16,7 @@ bcrypt = Bcrypt(app)
 api = Api(app)
 migrate = Migrate(app, db)
 connected_clients = {}
-CORS(app, supports_credentials=True,resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, supports_credentials=True,resources={r"/*": {"origins": "http://localhost:3001"}})
 
 def current_user():
     user = User.query.filter(User.id == session.get('user_id')).first()
@@ -47,9 +47,10 @@ def login():
     except Exception as e:
         return {"error":str(e)}
 
-@app.route('/logout', methods=['GET'])
+@app.post('/logout')
 def logout():
     user_id = session.pop('user_id', None)
+    print(user_id)
     if user_id is not None:
         # User was logged in and is now logged out
         return jsonify({"message": "User logged out successfully."}), 200
