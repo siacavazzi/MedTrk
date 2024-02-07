@@ -18,10 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from '../constants';
 import Alert from '@mui/material/Alert';
 
-
 function Copyright(props) {
-
-
 
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
